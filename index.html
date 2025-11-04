@@ -9,7 +9,126 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* same CSS styling as before */
+    :root {
+      --bg: #0b1020;
+      --panel: #10162b;
+      --panel-2: #151c34;
+      --text: #e7ecf5;
+      --muted: #a6b0c2;
+      --accent: #4cc2ff;  /* sky */
+      --accent-2: #77f2b5; /* mint */
+      --danger: #ff6b6b;
+      --warning: #ffd166;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --border: 1px solid rgba(255,255,255,.08);
+      --code: #0f172a;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(76,194,255,.15), transparent 60%),
+                  radial-gradient(900px 450px at 100% 0%, rgba(119,242,181,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      letter-spacing: 0.2px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header / Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(11,16,32,.85), rgba(11,16,32,.35));
+      border-bottom: var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 14px 0;
+    }
+    .brand { display:flex; align-items:center; gap: 10px; font-weight: 800; letter-spacing: .4px; }
+    .brand-icon { width: 28px; height: 28px; display:grid; place-items:center; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); }
+    .brand span { opacity: .9; }
+    nav ul { list-style: none; display:flex; gap: 18px; margin:0; padding:0; }
+    nav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 14px; }
+    nav a:hover { color: var(--text); }
+
+    .btn { display:inline-flex; align-items:center; gap:10px; padding:12px 16px; font-weight:700; border-radius: 14px; text-decoration:none; border: var(--border); background: linear-gradient(180deg, var(--panel), var(--panel-2)); color: var(--text); box-shadow: var(--shadow); }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { background: linear-gradient(135deg, rgba(76,194,255,.15), rgba(119,242,181,.12)); border-color: rgba(255,255,255,.14); }
+
+    /* Hero */
+    .hero { padding: 60px 0 24px; }
+    .hero-grid { display:grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; }
+    .badge { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border: var(--border); background: rgba(76,194,255,.08); color: #bfeaff; font-weight:700; font-size:12px; letter-spacing:.3px; }
+    h1 { font-size: clamp(34px, 6vw, 56px); line-height:1.1; margin: 14px 0 8px; }
+    .subtitle { color: var(--muted); font-size: clamp(15px, 2.2vw, 18px); max-width: 680px; }
+    .cta { margin-top: 22px; display:flex; flex-wrap: wrap; gap: 12px; }
+
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .panel { padding: 18px; }
+
+    .hero-card { padding: 18px; }
+    .hero-bullets { display:grid; gap: 8px; margin-top: 6px; }
+    .hero-bullets li { list-style: none; display:flex; align-items: flex-start; gap: 10px; }
+    .hero-bullets svg { flex: 0 0 18px; margin-top: 3px; }
+
+    /* Sections */
+    section { padding: 28px 0; }
+    .section-title { font-size: 24px; margin-bottom: 14px; }
+    .kicker { color: var(--accent); font-weight:800; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; }
+
+    /* Skills */
+    .grid { display:grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .chip { display:inline-flex; padding: 8px 12px; border-radius: 999px; border: var(--border); background: rgba(255,255,255,.03); font-weight:600; color: var(--text); }
+    .chips { display:flex; flex-wrap: wrap; gap: 10px; }
+
+    /* Cards */
+    .card { border-radius: var(--radius); border: var(--border); background: linear-gradient(180deg, var(--panel), var(--panel-2)); box-shadow: var(--shadow); padding: 18px; }
+    .card h3 { margin: 6px 0 8px; font-size: 18px; }
+    .meta { color: var(--muted); font-size: 13px; }
+
+    .pill { display:inline-flex; align-items:center; gap:8px; padding: 6px 10px; border-radius: 999px; border: var(--border); background: rgba(255,255,255,.04); font-size: 12px; color: var(--muted); }
+
+    .tools { display:flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+    .download { margin-top: 10px; display:flex; gap:10px; flex-wrap: wrap; }
+
+    /* Contact */
+    .contact-table { width: 100%; border-collapse: collapse; }
+    .contact-table td { padding: 10px 8px; border-bottom: 1px dashed rgba(255,255,255,.08); vertical-align: middle; }
+    .contact-table a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    /* Footer */
+    footer { padding: 26px 0 60px; color: var(--muted); text-align: center; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid.cols-3 { grid-template-columns: 1fr; }
+      .grid.cols-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Small motion */
+    .float { animation: float 8s ease-in-out infinite; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
   </style>
 </head>
 <body>
@@ -29,6 +148,7 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <a class="btn primary" href="https://etuk123456.github.io/portfolio1/docs/Profile.pdf" target="_blank" rel="noopener">Download CV</a>
     </div>
   </header>
 
@@ -40,13 +160,176 @@
           <span class="badge">Business Administration → Cybersecurity</span>
           <h1>Security Analyst & Ethical Hacker</h1>
           <p class="subtitle">Hi, I’m <strong>Akinbode Elijah</strong> — a Business Administration student with a passion for <strong>Cybersecurity & Ethical Hacking</strong>. I connect business risk with hands‑on security testing to identify and reduce vulnerabilities that could impact organizations.</p>
+          <ul class="hero-bullets">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Real‑world labs: web apps, networks, Wi‑Fi, and OSINT.</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Focus on <strong>vulnerability analysis</strong>, <strong>penetration testing</strong>, and <strong>threat assessment</strong>.</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Clear, business‑aware reporting with practical remediation.</span>
+            </li>
+          </ul>
+          <div class="cta">
+            <a class="btn" href="#projects">See Projects</a>
+            <a class="btn" href="#contact">Contact Me</a>
+          </div>
+        </div>
+        <div>
+          <div class="glass hero-card float">
+            <div class="panel">
+              <div class="kicker">What I do</div>
+              <h2 class="section-title">Ethical Hacking & Cyber Defense</h2>
+              <p class="meta">I perform information gathering (OSINT), vulnerability scanning, and penetration testing using industry‑standard tools, then create clear security summaries and remediation plans.</p>
+              <div class="tools">
+                <span class="pill">Nmap</span>
+                <span class="pill">Burp Suite</span>
+                <span class="pill">Wireshark</span>
+                <span class="pill">Metasploit</span>
+                <span class="pill">Nikto</span>
+                <span class="pill">Wapiti</span>
+                <span class="pill">WhatWeb</span>
+                <span class="pill">Bettercap</span>
+                <span class="pill">Shodan</span>
+                <span class="pill">WHOIS</span>
+                <span class="pill">dig</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Skills, Projects, Labs, Learning, Contact -->
-    <!-- Keep all same content but remove Download CV references -->
+    <!-- Skills -->
+    <section id="skills">
+      <div class="container">
+        <div class="kicker">Skills & Tools</div>
+        <h2 class="section-title">Core Competencies</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Information Gathering (OSINT)</h3>
+            <p class="meta">WHOIS • dig • Shodan • theHarvester • subfinder</p>
+          </div>
+          <div class="card">
+            <h3>Vulnerability Assessment</h3>
+            <p class="meta">Nmap • Nikto • Wapiti • nuclei • WhatWeb • wafw00f</p>
+          </div>
+          <div class="card">
+            <h3>Penetration Testing</h3>
+            <p class="meta">Burp Suite • Metasploit • gobuster • feroxbuster • wpscan • sqlmap</p>
+          </div>
+          <div class="card">
+            <h3>Network & Wi‑Fi Analysis</h3>
+            <p class="meta">Wireshark • Bettercap • Ettercap • traceroute/ping • nc</p>
+          </div>
+          <div class="card">
+            <h3>Web App Security</h3>
+            <p class="meta">OWASP Top 10 • headers (CSP/HSTS) • auth • sessions • inputs</p>
+          </div>
+          <div class="card">
+            <h3>Reporting & Communication</h3>
+            <p class="meta">Vuln reports • threat assessments • executive summaries</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Projects -->
+    <section id="projects">
+      <div class="container">
+        <div class="kicker">Portfolio</div>
+        <h2 class="section-title">Featured Security Projects</h2>
+
+        <div class="grid cols-2">
+          <!-- Cisco -->
+          <article class="card">
+            <span class="pill">🕵️ Vulnerability Assessment — Cisco</span>
+            <h3>Exposure Review & Hardening Guidance</h3>
+            <p class="meta">Recon & scanners: whois, dig/nslookup, theHarvester, subfinder, WhatWeb, nmap, wafw00f, nikto, wpscan.</p>
+            <ul class="hero-bullets">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Identified web exposure & open ports</li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Prioritized hardening recommendations</li>
+            </ul>
+            <div class="download">
+              <a class="btn" href="https://github.com/akinbodeelijah-sketch/my-portfolio/blob/main/Cisco%20Pentest.docx" target="_blank" rel="noopener">Download Report (DOCX)</a>
+            </div>
+          </article>
+
+          <!-- IBEDC -->
+          <article class="card">
+            <span class="pill">⚡ Penetration Test — IBEDC</span>
+            <h3>Footprint Mapping, Endpoints & Remediation</h3>
+            <p class="meta">whois, dig/nslookup, theHarvester, subfinder, WhatWeb, nmap, wafw00f, gobuster, feroxbuster, nikto, nuclei, wpscan, sqlmap, curl, traceroute/ping, nc.</p>
+            <ul class="hero-bullets">
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>~265+ subdomains & admin endpoints discovered</li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Missing headers (CSP/HSTS), outdated JS, exposed endpoints</li>
+              <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#77f2b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Action items: restrict admin, enable WAF rules, patch, auth test</li>
+            </ul>
+            <div class="download">
+              <a class="btn" href="https://github.com/akinbodeelijah-sketch/my-portfolio/raw/refs/heads/main/IBEDC.docx.docx" target="_blank" rel="noopener">Download Report (DOCX)</a>
+            </div>
+            <p class="meta">Note: Public report is redacted. For sensitive evidence or raw logs, contact me.</p>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+          <strong>Evidence Repository</strong>
+          <p class="meta">Sanitized tool outputs and screenshots are available in <code>Vulnerability_Assessment/appendix/</code>. I can produce redacted screenshots or a stakeholder‑friendly PDF upon request.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Labs -->
+    <section id="labs">
+      <div class="container">
+        <div class="kicker">Labs</div>
+        <h2 class="section-title">Hands‑On Security Labs</h2>
+        <div class="grid cols-2">
+          <article class="card">
+            <span class="pill">🌐 Web Application Security Lab (DVWA)</span>
+            <p class="meta">Practiced: SQLi, XSS, CSRF, file upload exploitation.</p>
+            <div class="download">
+              <a class="btn" href="#" aria-disabled="true" onclick="alert('Replace with your lab notes PDF link.'); return false;">View Findings (PDF)</a>
+            </div>
+          </article>
+          <article class="card">
+            <span class="pill">📡 Wi‑Fi Security Testing Lab</span>
+            <p class="meta">Captured WPA handshakes (controlled env) using Bettercap & Ettercap. Practiced safe cracking methods.</p>
+            <div class="download">
+              <a class="btn" href="#" aria-disabled="true" onclick="alert('Replace with your Wi‑Fi lab notes link.'); return false;">View Notes</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learning / Certifications -->
+    <section id="certs">
+      <div class="container">
+        <div class="kicker">Learning</div>
+        <h2 class="section-title">Certifications & Ongoing Education</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Forage</h3>
+            <p class="meta">Virtual cybersecurity experience — <em>in progress</em></p>
+          </div>
+          <div class="card">
+            <h3>Toriloacademy</h3>
+            <p class="meta">Cybersecurity + Ethical Hacking Mastery — <em>in progress</em></p>
+          </div>
+          <div class="card">
+            <h3>Blue Team Labs Online</h3>
+            <p class="meta">Defensive labs and challenges — <em>in progress</em></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
     <section id="contact">
       <div class="container">
         <div class="kicker">Contact</div>
@@ -65,14 +348,15 @@
               <tr>
                 <td>📍</td>
                 <td>Lagos, Nigeria</td>
+      
               </tr>
               <tr>
                 <td>🌐</td>
-                <td><a href="https://www.linkedin.com/in/elijah-akinbode-0141b6380" target="_blank" rel="noopener">My LinkedIn Profile</a></td>
+                <td><a href="https://www.linkedin.com/in/elijah-akinbode-0141b6380" target="_blank" rel="noopener">The things I do daily on LinkedIn</a></td>
               </tr>
               <tr>
                 <td>📺</td>
-                <td><a href="https://www.youtube.com/@EliAkins-x2j" target="_blank" rel="noopener">My YouTube Tutorials</a></td>
+                <td><a href="https://www.youtube.com/@EliAkins-x2j" target="_blank" rel="noopener">Watch my tutorials on YouTube</a></td>
               </tr>
             </tbody>
           </table>
